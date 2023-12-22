@@ -1,9 +1,6 @@
 import pywinauto
 
-from selenium import webdriver
-from selenium.webdriver.edge.options import Options
 from time import sleep
-from pywinauto.application import Application
 
 
 def killing_apps(edge_driver, application_path):
@@ -22,4 +19,3 @@ def killing_apps(edge_driver, application_path):
         exit()
     else:
         print("Apps closed!")
-
