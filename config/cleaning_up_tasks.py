@@ -5,11 +5,13 @@ from time import sleep
 
 def killing_apps(edge_driver, application_path):
     try:
+        # Implementar a validação caso exista a instância da drive aberta
         # Closing the legacy application
         edge_driver.quit()
 
         sleep(1)
 
+        # Implementar a validação de verificação da aplicação aberta ou em execução
         # Closing the legacy application
         app = pywinauto.application.Application(backend = "uia")
         app.connect(path = application_path, title = "Employee Database", timeout = 100)

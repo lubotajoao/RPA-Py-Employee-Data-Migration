@@ -9,4 +9,3 @@ api_migration_data_url = (configFile['APIMigrationDataURL'])
 api_url = (configFile['api_url'])
 data_migration_web_window = (configFile['data_migration_web_window'])
 legacy_app_window = (configFile['legacy_app_window'])
-

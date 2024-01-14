@@ -1,6 +1,18 @@
-from libs import *
+import pygetwindow
+
+from selenium import webdriver
+from selenium.webdriver.edge.options import Options
+from pywinauto.application import Application
+
+from api_data.getting_phone_number_and_start_date import *
+from config.reading_config_file import *
+from config.cleaning_up_tasks import *
+from legacy_app.getting_legacy_employee_data import *
+from web_app.getting_employee_id import *
+from web_app.filling_migration_form import *
 
 
+# noinspection PyGlobalUndefined
 def main():
     global first_name, last_name, email_address, city, state, zip_code, job_title, department, manager_name
     try:
@@ -9,12 +21,12 @@ def main():
         # Launching web migration application
         options = Options()
         options.add_experimental_option("detach", True)
-        edge_driver = webdriver.Edge(options = options)
+        edge_driver = webdriver.Edge(options=options)
         edge_driver.maximize_window()
         edge_driver.get(data_migration_portal_url)
 
         # Launching the legacy application
-        app_win = Application(backend = 'uia').start(application_path).connect(title = "Employee Database", timeout = 100)
+        app_win = Application(backend='uia').start(application_path).connect(title="Employee Database", timeout=100)
 
         for x in range(10):
             # Switching to the web migration application
@@ -25,14 +37,14 @@ def main():
             employee_id = getting_id(edge_driver)
 
             # Getting the Employee Phone Number and Start Date From The Migration API
-            phone_number = getting_phone_number(api_url, employee_id)
-            start_date = getting_start_date(api_url, employee_id)
+            phone_number = getting_phone_number(url=api_url, employee_id=employee_id)
+            start_date = getting_start_date(url=api_url, employee_id=employee_id)
 
             # Switching to the legacy application
             app_win.EmployeeDatabase.set_focus()
 
             # Getting the Employee Data From Legacy Application
-            employee_data = getting_legacy_data(employee_id, app_win)
+            employee_data = getting_legacy_data(employee_id=employee_id, app=app_win)
 
             for index in range(len(employee_data)):
                 if index == 0:
